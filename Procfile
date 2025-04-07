@@ -1,1 +1,1 @@
-web: build/install/com.example.ktor-kotlinogreniyorum/bin/com.example.ktor-kotlinogreniyorum
+web: ./build/install/ktor-kotlinogreniyorum/bin/ktor-kotlinogreniyorum
