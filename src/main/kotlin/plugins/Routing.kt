@@ -17,7 +17,6 @@ fun Application.configureRouting() {
     val questionRepository by inject<QuestionRepository>()
 
     routing {
-        // Tüm modülleri getir
         get("/modules") {
             try {
                 val modules = moduleRepository.getAllModules()
@@ -32,7 +31,6 @@ fun Application.configureRouting() {
             }
         }
 
-        // Belirli bir modüle ait konuları getir
         get("/modules/{id}/topics") {
             try {
                 val moduleId = call.parameters["id"]?.toIntOrNull()
@@ -46,7 +44,6 @@ fun Application.configureRouting() {
                     return@get
                 }
 
-                // Modülün var olup olmadığını kontrol et
                 val module = moduleRepository.getModuleById(moduleId)
                 if (module == null) {
                     call.respond(
@@ -58,10 +55,8 @@ fun Application.configureRouting() {
                     return@get
                 }
 
-                // Modül varsa, ona ait konuları getir
                 val topics = topicRepository.getTopicsByModuleId(moduleId)
 
-                // Konuların boş olup olmadığını kontrol et
                 if (topics.isEmpty()) {
                     call.respond(
                         ApiResponse.Error(
@@ -83,7 +78,6 @@ fun Application.configureRouting() {
             }
         }
 
-        // Belirli bir modüle ait soruları getir
         get("/modules/{id}/questions") {
             try {
                 val moduleId = call.parameters["id"]?.toIntOrNull()
@@ -97,7 +91,6 @@ fun Application.configureRouting() {
                     return@get
                 }
 
-                // Modülün var olup olmadığını kontrol et
                 val module = moduleRepository.getModuleById(moduleId)
                 if (module == null) {
                     call.respond(
@@ -109,7 +102,6 @@ fun Application.configureRouting() {
                     return@get
                 }
 
-                // Modül varsa, ona ait soruları getir
                 val questions = questionRepository.getQuestionsByModuleId(moduleId)
                 call.respond(ApiResponse.Success(questions))
             } catch (e: Exception) {
@@ -122,7 +114,6 @@ fun Application.configureRouting() {
             }
         }
 
-        // Belirli bir soruyu cevapla
         post("/questions/{id}/answer") {
             try {
                 val questionId = call.parameters["id"]?.toIntOrNull()
