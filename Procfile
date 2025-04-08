@@ -1,1 +1,1 @@
-web: java -jar build/libs/ktor-kotlinogreniyorum-all.jar
+web: ./build/install/ktor-kotlinogreniyorum/bin/ktor-kotlinogreniyorum
