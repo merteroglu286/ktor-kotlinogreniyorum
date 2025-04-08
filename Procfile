@@ -1,1 +1,1 @@
-web: java -Dio.ktor.development=false -jar build/libs/ktor-kotlinogreniyorum-all.jar
+web: java -jar build/libs/ktor-kotlinogreniyorum-all.jar
