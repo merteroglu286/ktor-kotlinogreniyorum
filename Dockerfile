@@ -1,10 +1,16 @@
+# Build aşaması
 FROM gradle:7-jdk11 AS build
-COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src
+COPY --chown=gradle:gradle . .
 RUN gradle buildFatJar --no-daemon
 
+# Runtime aşaması
 FROM openjdk:11
-EXPOSE 8080:8080
-RUN mkdir /app
-COPY --from=build /home/gradle/src/build/libs/*.jar /app/com.example.ktor-kotlinogreniyorum.jar
-ENTRYPOINT ["java","-jar","/app/com.example.ktor-kotlinogreniyorum.jar"]
+EXPOSE 8080
+WORKDIR /app
+
+# Jar dosyasını app içine kopyala
+COPY --from=build /home/gradle/src/build/libs/*-fat.jar /app/app.jar
+
+# Uygulamayı başlat
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
